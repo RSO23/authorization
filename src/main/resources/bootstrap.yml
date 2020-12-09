@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: authorization
+  cloud:
+    consul:
+      host: localhost
+      config:
+        fail-fast: false
+        format: yaml
+      discovery:
+        fail-fast: false
+        prefer-ip-address: true
+
+---
+spring:
+  profiles: prod
+  cloud:
+    consul:
+      host: consul-consul-server

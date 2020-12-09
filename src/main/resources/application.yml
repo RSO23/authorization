@@ -1,0 +1,44 @@
+isProd: false
+
+server:
+  port: 8085
+
+token:
+  # 60 min
+  expirationTime: 3600000
+  secret: veryhardsecret
+
+my:
+  swagger:
+    prefix:
+
+spring:
+  application:
+    name: authorization
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+# Show details of health endpoint
+management:
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  health:
+    diskspace:
+      enabled: true
+    db:
+      enabled: true
+
+---
+spring:
+  profiles: prod
+
+my:
+  swagger:
+    prefix: /authorization
+
+isProd: true

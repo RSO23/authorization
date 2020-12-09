@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authorization-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authorization
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: authorization
+    spec:
+      containers:
+        - image: blarc/rso-authorization
+          name: authorization
+          ports:
+            - containerPort: 8085
+              name: server
+              protocol: TCP
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: server
+            initialDelaySeconds: 180
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: server
+            initialDelaySeconds: 180
+            periodSeconds: 3
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: authorization
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8085
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: authorization
