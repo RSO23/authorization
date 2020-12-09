@@ -7,9 +7,6 @@ spring:
       config:
         fail-fast: false
         format: yaml
-      discovery:
-        fail-fast: false
-        prefer-ip-address: true
 
 ---
 spring:

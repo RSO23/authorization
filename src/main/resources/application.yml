@@ -18,7 +18,7 @@ spring:
   cloud:
     loadbalancer:
       ribbon:
-        enabled: false
+        enabled: true
 
 # Show details of health endpoint
 management:
